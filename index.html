@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Products Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    tr:hover {
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+    .desc-tooltip {
+      position: absolute;
+      background: #000;
+      color: #fff;
+      padding: 6px;
+      border-radius: 4px;
+      max-width: 300px;
+      z-index: 999;
+      display: none;
+    }
+    img {
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body class="container mt-4">
+
+  <h2 class="mb-3">📦 Products Dashboard</h2>
+
+  <div class="d-flex gap-2 mb-3">
+    <input id="searchInput" class="form-control w-25" placeholder="Tìm theo title...">
+    
+    <select id="pageSize" class="form-select w-25">
+      <option value="5">5 / trang</option>
+      <option value="10" selected>10 / trang</option>
+      <option value="20">20 / trang</option>
+    </select>
+
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
+      ➕ Tạo sản phẩm
+    </button>
+
+    <button class="btn btn-secondary" onclick="exportCSV()">⬇ Export CSV</button>
+  </div>
+
+  <table class="table table-bordered text-center">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th onclick="sortBy('title')">Title ⬍</th>
+        <th onclick="sortBy('price')">Price ⬍</th>
+        <th>Category</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <div class="d-flex justify-content-center gap-2" id="pagination"></div>
+
+  <div class="desc-tooltip" id="tooltip"></div>
+
+  <!-- DETAIL MODAL -->
+  <div class="modal fade" id="detailModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Chi tiết sản phẩm</h5>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="detailId">
+          <input id="detailTitle" class="form-control mb-2">
+          <input id="detailPrice" type="number" class="form-control mb-2">
+          <textarea id="detailDesc" class="form-control mb-2"></textarea>
+          <input id="detailImage" class="form-control mb-2">
+          <img id="detailPreview" class="img-fluid rounded">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" onclick="updateProduct()">💾 Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATE MODAL -->
+  <div class="modal fade" id="createModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Tạo sản phẩm</h5>
+        </div>
+        <div class="modal-body">
+          <input id="createTitle" class="form-control mb-2" placeholder="Title">
+          <input id="createPrice" type="number" class="form-control mb-2" placeholder="Price">
+          <textarea id="createDesc" class="form-control mb-2" placeholder="Description"></textarea>
+          <input id="createImage" class="form-control mb-2" placeholder="Image URL">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-success" onclick="createProduct()">Tạo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
